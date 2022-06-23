@@ -1,15 +1,15 @@
-[![Downloads](https://pepy.tech/badge/opencv-python-inference-engine)](https://pepy.tech/project/opencv-python-inference-engine) [![Downloads](https://pepy.tech/badge/opencv-python-inference-engine/month)](https://pepy.tech/project/opencv-python-inference-engine/month) [![Downloads](https://pepy.tech/badge/opencv-python-inference-engine/week)](https://pepy.tech/project/opencv-python-inference-engine/week)
+# renamed-opencv-python-inference-engine
 
-# opencv-python-inference-engine
+**How does this fork differ from upstream?** Upstream makes OpenCV import-able as `cv2`, while this fork makes it available as `renamed_cv2`. The reason why the module is renamed is to avoid conflicting with the '[opencv-contrib-python](https://pypi.org/project/opencv-contrib-python/)' package, which among other submodules, makes `cv2.aruco` available for detecting ARUCO markers. Since 'opencv-contrib-python' doesn't have Intel's inference engine compiled in, you would need upstream's package '[opencv-python-inference-engine](https://pypi.org/project/opencv-python-inference-engine/)', which gives you `cv2.dnn.readNet()`. If you installed both packages, only one of the `cv2`s would resolve and you'd lose access to either `cv2.aruco` or `cv2.dnn`. Therefore, this repo introduces '[renamed-opencv-python-inference-engine](https://pypi.org/project/renamed-opencv-python-inference-engine/)' package, which gives you `renamed_cv2.dnn.readNet()`.
 
-This is *Unofficial* pre-built OpenCV with the inference engine part of [OpenVINO](https://github.com/openvinotoolkit/openvino) package for Python.
+Another option would have been to compile one OpenCV python package with both the contrib submodules and the deep learning submodule compiled in. However, since I don't intent to make releases as regularly as the official OpenCV org does, and the default OpenCV python package doesn't include the deep learning submodule, this compromise allows users to access the latest OpenCV python w/contrib libraries from `cv2`, while being able to access the deep learning submodule through the `renamed_cv2` module.
 
 ## Installing from `pip3`
 
 Remove previously installed versions of `cv2`
 
 ```bash
-pip3 install opencv-python-inference-engine
+pip3 install renamed-opencv-python-inference-engine
 ```
 
 ## Examples of usage
@@ -149,6 +149,12 @@ for i in  cv2/*.so; do chrpath -r '$ORIGIN' $i; done
 # final .whl will be in /create_wheel/dist/
 # NB: check version in the `setup.py`
 ../venv/bin/python3 setup.py bdist_wheel
+```
+
+The .whl will be in /create_wheel/dist. In order to be able to install it on other version of Python besides the one with which it was compiled, the .whl file will need to be renamed. For example:
+
+```
+mv renamed_opencv_python_inference_engine-2022.1.5-cp36-cp36m-linux_x86_64.whl renamed_opencv_python_inference_engine-2022.1.5-py3-none-manylinux1_x86_64.whl
 ```
 
 ### Optional things to play with

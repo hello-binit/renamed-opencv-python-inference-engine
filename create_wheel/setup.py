@@ -14,17 +14,17 @@ class EmptyListWithLength(list):
 
 
 setuptools.setup(
-    name='opencv-python-inference-engine',
+    name='renamed-opencv-python-inference-engine',
     version='2022.01.05',
-    url="https://github.com/banderlog/opencv-python-inference-engine",
-    maintainer="Kabakov Borys",
+    url="https://github.com/hello-binit/renamed-opencv-python-inference-engine",
+    maintainer="Binit Shah",
     license='MIT, Apache 2.0',
-    description="Wrapper package for OpenCV with Inference Engine python bindings",
+    description="Wrapper package for OpenCV with Inference Engine python bindings, but compiled under another namespace to prevent conflicts with the default OpenCV python packages",
     long_description=long_description,
     long_description_content_type="text/markdown",
     ext_modules=EmptyListWithLength(),
-    packages=['cv2'],
-    package_data={'cv2': ['*.so*', '*.mvcmd', '*.xml']},
+    packages=['renamed_cv2'],
+    package_data={'renamed_cv2': ['*.so*', '*.mvcmd', '*.xml']},
     include_package_data=True,
     install_requires=['numpy'],
     classifiers=[
