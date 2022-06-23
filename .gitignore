@@ -34,7 +34,7 @@ create_wheel/*
 !create_wheel/README.md
 !create_wheel/setup.py
 !create_wheel/renamed_cv2
-create_wheel/cv2/*
+create_wheel/renamed_cv2/*
 !create_wheel/renamed_cv2/__init__.py
 
 tests/venv_t

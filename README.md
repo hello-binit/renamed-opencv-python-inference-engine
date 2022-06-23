@@ -2,7 +2,7 @@
 
 **How does this fork differ from upstream?** Upstream makes OpenCV import-able as `cv2`, while this fork makes it available as `renamed_cv2`. The reason why the module is renamed is to avoid conflicting with the '[opencv-contrib-python](https://pypi.org/project/opencv-contrib-python/)' package, which among other submodules, makes `cv2.aruco` available for detecting ARUCO markers. Since 'opencv-contrib-python' doesn't have Intel's inference engine compiled in, you would need upstream's package '[opencv-python-inference-engine](https://pypi.org/project/opencv-python-inference-engine/)', which gives you `cv2.dnn.readNet()`. If you installed both packages, only one of the `cv2`s would resolve and you'd lose access to either `cv2.aruco` or `cv2.dnn`. Therefore, this repo introduces '[renamed-opencv-python-inference-engine](https://pypi.org/project/renamed-opencv-python-inference-engine/)' package, which gives you `renamed_cv2.dnn.readNet()`.
 
-Another option would have been to compile one OpenCV python package with both the contrib submodules and the deep learning submodule compiled in. However, since I don't intent to make releases as regularly as the official OpenCV org does, and the default OpenCV python package doesn't include the deep learning submodule, this compromise allows users to access the latest OpenCV python w/contrib libraries from `cv2`, while being able to access the deep learning submodule through the `renamed_cv2` module.
+Another option would have been to compile one OpenCV python package with both the contrib submodules and the deep learning submodule compiled in. However, since I don't intend to make releases as regularly as the official OpenCV org does, and the default OpenCV python package doesn't include the deep learning submodule, this compromise allows users to access the latest OpenCV python w/contrib libraries from `cv2`, while being able to access the deep learning submodule through the `renamed_cv2` module.
 
 ## Installing from `pip3`
 
@@ -102,8 +102,8 @@ sudo ln -s  /usr/bin/python3 /usr/bin/python
 ### Preparing
 
 ```bash
-git clone https://github.com/banderlog/opencv-python-inference-engine
-cd opencv-python-inference-engine
+git clone https://github.com/hello-binit/renamed-opencv-python-inference-engine
+cd renamed-opencv-python-inference-engine
 # git checkout dev
 ./download_all_stuff.sh
 ```
@@ -133,18 +133,18 @@ make -j6
 ```bash
 # get all compiled libs together
 cd ../../
-cp build/opencv/lib/python3/cv2.cpython*.so create_wheel/cv2/cv2.so
+cp build/opencv/lib/python3/cv2.cpython*.so create_wheel/renamed_cv2/cv2.so
 
-cp dldt/bin/intel64/Release/lib/*.so create_wheel/cv2/
-cp dldt/bin/intel64/Release/lib/*.mvcmd create_wheel/cv2/
-cp dldt/bin/intel64/Release/lib/plugins.xml create_wheel/cv2/
-cp dldt/inference-engine/temp/tbb/lib/libtbb.so.2 create_wheel/cv2/
+cp dldt/bin/intel64/Release/lib/*.so create_wheel/renamed_cv2/
+cp dldt/bin/intel64/Release/lib/*.mvcmd create_wheel/renamed_cv2/
+cp dldt/bin/intel64/Release/lib/plugins.xml create_wheel/renamed_cv2/
+cp dldt/inference-engine/temp/tbb/lib/libtbb.so.2 create_wheel/renamed_cv2/
 
-cp build/ffmpeg/binaries/lib/*.so create_wheel/cv2/
+cp build/ffmpeg/binaries/lib/*.so create_wheel/renamed_cv2/
 
 # change RPATH
 cd create_wheel
-for i in  cv2/*.so; do chrpath -r '$ORIGIN' $i; done
+for i in  renamed_cv2/*.so; do chrpath -r '$ORIGIN' $i; done
 
 # final .whl will be in /create_wheel/dist/
 # NB: check version in the `setup.py`

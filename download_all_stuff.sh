@@ -38,7 +38,7 @@ find build/opencv/ -mindepth 1 -not -name 'opencv_setup.sh' -delete
 find build/ffmpeg/ -mindepth 1 -not -name 'ffmpeg_*.sh' -delete
 
 green "CLEAN WHEEL DIR"
-find create_wheel/cv2/ -type f -not -name '__init__.py' -delete
+find create_wheel/renamed_cv2/ -type f -not -name '__init__.py' -delete
 rm -drf create_wheel/build
 rm -drf create_wheel/dist
 rm -drf create_wheel/*egg-info
